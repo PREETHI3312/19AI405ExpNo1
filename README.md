@@ -40,3 +40,59 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
+
+### PROGRAM
+
+```
+import random
+
+class MedicinePrescribingAgent:
+    def __init__(self):
+        self.performance = 0
+        self.rooms = ["Room1", "Room2"]
+        # Assign random temperatures to patients in rooms
+        self.patients = {room: random.uniform(97.0, 102.0) for room in self.rooms}
+        self.current_room = random.choice(self.rooms)
+
+    def sense(self):
+        """Sense patient temperature in current room"""
+        temp = self.patients[self.current_room]
+        return temp
+
+    def treat(self, temp):
+        """Treat patient if unhealthy"""
+        if temp > 98.5:
+            print(f"Patient in {self.current_room} has fever ({temp:.1f}°F). Prescribing medicine...")
+            self.performance += 1
+            # After treatment, reset temperature to healthy
+            self.patients[self.current_room] = 98.0
+        else:
+            print(f"Patient in {self.current_room} is healthy ({temp:.1f}°F). No medicine needed.")
+
+    def move(self):
+        """Move to another room (performance decreases)"""
+        next_room = self.rooms[1] if self.current_room == self.rooms[0] else self.rooms[0]
+        print(f"Moving from {self.current_room} to {next_room}...")
+        self.current_room = next_room
+        self.performance -= 1
+
+    def run(self, cycles=4):
+        """Run the agent for a number of cycles"""
+        for _ in range(cycles):
+            temp = self.sense()
+            self.treat(temp)
+            self.move()
+        print(f"\nFinal Performance Score: {self.performance}")
+
+
+# Run the agent
+agent = MedicinePrescribingAgent()
+agent.run()
+
+
+```
+
+## OUTPUT
+
+
+
