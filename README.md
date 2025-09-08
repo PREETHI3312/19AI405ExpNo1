@@ -44,15 +44,12 @@
 ### PROGRAM
 
 ```
-import random
-
 class MedicinePrescribingAgent:
-    def __init__(self):
+    def __init__(self, rooms, patients):
         self.performance = 0
-        self.rooms = ["Room1", "Room2"]
-        # Assign random temperatures to patients in rooms
-        self.patients = {room: random.uniform(97.0, 102.0) for room in self.rooms}
-        self.current_room = random.choice(self.rooms)
+        self.rooms = rooms
+        self.patients = patients
+        self.current_room = rooms[0]  # Start at first room
 
     def sense(self):
         """Sense patient temperature in current room"""
@@ -76,7 +73,7 @@ class MedicinePrescribingAgent:
         self.current_room = next_room
         self.performance -= 1
 
-    def run(self, cycles=4):
+    def run(self, cycles):
         """Run the agent for a number of cycles"""
         for _ in range(cycles):
             temp = self.sense()
@@ -85,14 +82,30 @@ class MedicinePrescribingAgent:
         print(f"\nFinal Performance Score: {self.performance}")
 
 
+# ----------------- MAIN PROGRAM -----------------
+
+# Input from user
+rooms = ["Room1", "Room2"]
+patients = {}
+
+for room in rooms:
+    temp = float(input(f"Enter patient temperature in {room} (°F): "))
+    patients[room] = temp
+
+cycles = int(input("Enter number of cycles the agent should run: "))
+
 # Run the agent
-agent = MedicinePrescribingAgent()
-agent.run()
+agent = MedicinePrescribingAgent(rooms, patients)
+agent.run(cycles)
+
 
 
 ```
 
 ## OUTPUT
+
+<img width="667" height="255" alt="image" src="https://github.com/user-attachments/assets/462a68f6-9c90-4c05-aa3c-001bd6e51b4c" />
+
 
 
 
