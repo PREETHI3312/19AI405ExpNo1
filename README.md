@@ -1,6 +1,6 @@
 <h1>ExpNo 1 :Developing AI Agent with PEAS Description</h1>
-<h3>Name: Saravanan N</h3>
-<h3>Register Number/Staff Id: TSML006</h3>
+<h3>Name: PREETHI A K</h3>
+<h3>Register Number: 212223230156</h3>
 
 
 <h3>AIM:</h3>
@@ -44,67 +44,32 @@
 ### PROGRAM
 
 ```
-class MedicinePrescribingAgent:
-    def __init__(self, rooms, patients):
-        self.performance = 0
-        self.rooms = rooms
-        self.patients = patients
-        self.current_room = rooms[0]  # Start at first room
 
-    def sense(self):
-        """Sense patient temperature in current room"""
-        temp = self.patients[self.current_room]
-        return temp
-
-    def treat(self, temp):
-        """Treat patient if unhealthy"""
-        if temp > 98.5:
-            print(f"Patient in {self.current_room} has fever ({temp:.1f}°F). Prescribing medicine...")
-            self.performance += 1
-            # After treatment, reset temperature to healthy
-            self.patients[self.current_room] = 98.0
-        else:
-            print(f"Patient in {self.current_room} is healthy ({temp:.1f}°F). No medicine needed.")
-
-    def move(self):
-        """Move to another room (performance decreases)"""
-        next_room = self.rooms[1] if self.current_room == self.rooms[0] else self.rooms[0]
-        print(f"Moving from {self.current_room} to {next_room}...")
-        self.current_room = next_room
-        self.performance -= 1
-
-    def run(self, cycles):
-        """Run the agent for a number of cycles"""
-        for _ in range(cycles):
-            temp = self.sense()
-            self.treat(temp)
-            self.move()
-        print(f"\nFinal Performance Score: {self.performance}")
-
-
-# ----------------- MAIN PROGRAM -----------------
-
-# Input from user
 rooms = ["Room1", "Room2"]
-patients = {}
+patients = {r: float(input(f"Enter temperature in {r}: ")) for r in rooms}
+cycles = int(input("Enter number of cycles: "))
 
-for room in rooms:
-    temp = float(input(f"Enter patient temperature in {room} (°F): "))
-    patients[room] = temp
-
-cycles = int(input("Enter number of cycles the agent should run: "))
-
-# Run the agent
-agent = MedicinePrescribingAgent(rooms, patients)
-agent.run(cycles)
-
+p, room = 0, rooms[0]
+for i in range(cycles):
+    print(f"\nCycle {i+1}:")
+    temp = patients[room]
+    if temp > 98.5:
+        print(f"{room}: fever ({temp}°F). Prescribing medicine.")
+        p += 1
+        patients[room] = 98.0
+    else:
+        print(f"{room}: healthy ({temp}°F).")
+    room = rooms[1] if room == rooms[0] else rooms[0]
+    print(f"Moving to {room}.")
+    p -= 1
+print(f"\nFinal Performance: {p}")
 
 
 ```
 
 ## OUTPUT
 
-<img width="667" height="255" alt="image" src="https://github.com/user-attachments/assets/462a68f6-9c90-4c05-aa3c-001bd6e51b4c" />
+<img width="549" height="370" alt="image" src="https://github.com/user-attachments/assets/86f938e4-0acb-4f6b-b1d3-97b3f3fa03d1" />
 
 ## RESULT
 
